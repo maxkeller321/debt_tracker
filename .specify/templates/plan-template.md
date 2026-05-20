@@ -31,7 +31,17 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify compliance with `.specify/memory/constitution.md` (Dept Tracker v1.0.0):
+
+| Principle | Gate (must be true to proceed) |
+|-----------|--------------------------------|
+| I. Universal Usability | Primary flows use plain language; acceptance scenarios are non-technical |
+| II. Home-Server Fit | Local persistence + backup path documented; no mandatory SaaS for core tracking |
+| III. Credit Tracking Integrity | Multi-credit model, balance decrease, persistence, and audit/history addressed |
+| IV. Comprehensive Testing | Test stack named; each user story has unit + integration test plan; CI gate defined |
+| V. Clean Professional UI | UI approach is minimal/consistent; accessibility basics for primary flows planned |
+
+If any gate fails, document justification in **Complexity Tracking** or revise the plan before continuing.
 
 ## Project Structure
 

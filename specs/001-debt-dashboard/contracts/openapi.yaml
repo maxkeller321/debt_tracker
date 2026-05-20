@@ -1,0 +1,385 @@
+openapi: 3.1.0
+info:
+  title: Dept Tracker API
+  version: 0.1.0
+  description: REST API for household loan tracking (v1, no authentication)
+
+servers:
+  - url: http://localhost:8080/api/v1
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+
+  /dashboard:
+    get:
+      summary: Dashboard summary (active loans + household totals)
+      parameters:
+        - name: include_archived
+          in: query
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: Dashboard payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+
+  /loans:
+    get:
+      summary: List loans
+      parameters:
+        - name: status
+          in: query
+          schema: { type: string, enum: [active, archived, all] }
+      responses:
+        '200':
+          description: Loan list
+    post:
+      summary: Create loan (Quick or Advanced)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLoanRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDetail'
+
+  /loans/{loanId}:
+    parameters:
+      - $ref: '#/components/parameters/LoanId'
+    get:
+      summary: Loan detail with projections and interest summary
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDetail'
+        '404':
+          description: Not found
+    patch:
+      summary: Update loan terms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLoanRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDetail'
+    delete:
+      summary: Delete loan (requires confirm query param)
+      parameters:
+        - name: confirm
+          in: query
+          required: true
+          schema: { type: boolean }
+      responses:
+        '204':
+          description: Deleted
+
+  /loans/{loanId}/archive:
+    post:
+      summary: Mark loan paid off / archived
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      responses:
+        '200':
+          description: Archived
+
+  /loans/{loanId}/payments:
+    get:
+      summary: Payment history
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentEvent'
+    post:
+      summary: Record regular payment
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordPaymentRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentEvent'
+
+  /loans/{loanId}/sonderzahlungen/immediate:
+    post:
+      summary: Record immediate extra payment (Sonderzahlung)
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImmediateSonderzahlungRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentEvent'
+
+  /loans/{loanId}/sonderzahlungen/scheduled:
+    get:
+      summary: List scheduled extra payments
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledSonderzahlung'
+    post:
+      summary: Schedule extra payment
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleSonderzahlungRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledSonderzahlung'
+
+  /loans/{loanId}/sonderzahlungen/scheduled/{scheduleId}:
+    patch:
+      summary: Edit pending scheduled extra payment
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+        - name: scheduleId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledSonderzahlung'
+    delete:
+      summary: Cancel scheduled extra payment
+      parameters:
+        - $ref: '#/components/parameters/LoanId'
+        - name: scheduleId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Cancelled
+
+  /export:
+    get:
+      summary: Download JSON backup
+      responses:
+        '200':
+          description: JSON file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportBundle'
+
+  /import:
+    post:
+      summary: Replace all data from JSON backup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportBundle'
+      parameters:
+        - name: confirm
+          in: query
+          required: true
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: Import successful
+
+components:
+  parameters:
+    LoanId:
+      name: loanId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+  schemas:
+    Money:
+      type: object
+      required: [amount_minor, currency]
+      properties:
+        amount_minor: { type: integer }
+        currency: { type: string, example: EUR }
+
+    DashboardResponse:
+      type: object
+      properties:
+        household:
+          type: object
+          properties:
+            total_balance: { $ref: '#/components/schemas/Money' }
+            total_monthly_obligation: { $ref: '#/components/schemas/Money' }
+        loans:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoanSummary'
+
+    LoanSummary:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        label: { type: string }
+        remaining_balance: { $ref: '#/components/schemas/Money' }
+        periodic_payment: { $ref: '#/components/schemas/Money' }
+        payment_frequency: { type: string, enum: [monthly, yearly] }
+        last_payment_date: { type: string, format: date, nullable: true }
+        projected_payoff_date: { type: string, format: date, nullable: true }
+        progress_percent: { type: number }
+
+    LoanDetail:
+      allOf:
+        - $ref: '#/components/schemas/LoanSummary'
+        - type: object
+          properties:
+            payment_type: { type: string, enum: [fixed, apr] }
+            apr_percent: { type: number, nullable: true }
+            interest_paid_to_date: { $ref: '#/components/schemas/Money' }
+            interest_remaining_estimate: { $ref: '#/components/schemas/Money' }
+            recurring_sonderzahlungen:
+              type: array
+              items: { $ref: '#/components/schemas/RecurringSonderzahlung' }
+            upcoming_scheduled:
+              type: array
+              items: { $ref: '#/components/schemas/ScheduledSonderzahlung' }
+
+    CreateLoanRequest:
+      type: object
+      required: [label, remaining_balance_minor, payment_frequency, payment_type, setup_mode]
+      properties:
+        label: { type: string }
+        setup_mode: { type: string, enum: [quick, advanced] }
+        remaining_balance_minor: { type: integer }
+        original_principal_minor: { type: integer }
+        payment_frequency: { type: string, enum: [monthly, yearly] }
+        payment_type: { type: string, enum: [fixed, apr] }
+        fixed_payment_minor: { type: integer }
+        apr_basis_points: { type: integer }
+        loan_start_date: { type: string, format: date }
+        recurring_sonderzahlungen:
+          type: array
+          items: { $ref: '#/components/schemas/RecurringSonderzahlungInput' }
+        backfill_payments:
+          type: array
+          items: { $ref: '#/components/schemas/RecordPaymentRequest' }
+
+    UpdateLoanRequest:
+      type: object
+      properties:
+        label: { type: string }
+        fixed_payment_minor: { type: integer }
+        apr_basis_points: { type: integer }
+        notes: { type: string }
+
+    RecordPaymentRequest:
+      type: object
+      required: [amount_minor, paid_at]
+      properties:
+        amount_minor: { type: integer }
+        paid_at: { type: string, format: date }
+        note: { type: string }
+
+    ImmediateSonderzahlungRequest:
+      type: object
+      required: [amount_minor, paid_at]
+      properties:
+        amount_minor: { type: integer }
+        paid_at: { type: string, format: date }
+        confirm_overpayment: { type: boolean }
+
+    ScheduleSonderzahlungRequest:
+      type: object
+      required: [amount_minor, due_date]
+      properties:
+        amount_minor: { type: integer }
+        due_date: { type: string, format: date }
+
+    PaymentEvent:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        event_type: { type: string, enum: [regular, sonderzahlung] }
+        amount_minor: { type: integer }
+        interest_portion_minor: { type: integer }
+        principal_portion_minor: { type: integer }
+        balance_after_minor: { type: integer }
+        paid_at: { type: string, format: date }
+
+    RecurringSonderzahlung:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        amount_minor: { type: integer }
+        month: { type: integer }
+        day: { type: integer }
+
+    RecurringSonderzahlungInput:
+      type: object
+      required: [amount_minor, month, day]
+      properties:
+        amount_minor: { type: integer }
+        month: { type: integer }
+        day: { type: integer }
+
+    ScheduledSonderzahlung:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        amount_minor: { type: integer }
+        due_date: { type: string, format: date }
+        status: { type: string, enum: [pending, executed, cancelled] }
+
+    ExportBundle:
+      type: object
+      required: [schema_version, loans]
+      properties:
+        schema_version: { type: integer, enum: [1] }
+        exported_at: { type: string, format: date-time }
+        currency_code: { type: string }
+        loans: { type: array, items: { type: object } }

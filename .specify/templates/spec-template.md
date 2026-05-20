@@ -105,6 +105,8 @@
 <!--
   ACTION REQUIRED: Define measurable success criteria.
   These must be technology-agnostic and measurable.
+  Per constitution: include outcomes for usability (plain language, first-try success)
+  and accessibility (contrast, keyboard/focus) on primary flows where UI is involved.
 -->
 
 ### Measurable Outcomes

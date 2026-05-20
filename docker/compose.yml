@@ -1,0 +1,13 @@
+services:
+  dept-tracker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../data:/data
+    environment:
+      - DATA_DIR=/data
+      - STATIC_DIR=/app/static
+      - RUST_LOG=info

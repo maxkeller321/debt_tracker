@@ -3,6 +3,19 @@ alwaysApply: true
 ---
 
 <!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+Project: **Dept Tracker** — self-hosted debt/loan tracker for home servers.
+
+**Active feature**: `specs/001-debt-dashboard`  
+**Plan**: `specs/001-debt-dashboard/plan.md`  
+**Spec**: `specs/001-debt-dashboard/spec.md`
+
+**Stack**: Rust (Axum, sqlx, SQLite) + Svelte 5 SPA; Docker Compose on port 8080.  
+**Layout**: `backend/crates/{domain,db,api}`, `frontend/`, `docker/`.
+
+**Commands** (after implementation):
+- `docker compose -f docker/compose.yml up -d`
+- `cd backend && cargo test --workspace`
+- `cd frontend && npm test`
+
+Governance: `.specify/memory/constitution.md` (v1.0.0). Mandatory tests; JSON-only backup; no auth.
 <!-- SPECKIT END -->

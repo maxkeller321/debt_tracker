@@ -1,50 +1,102 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: (template placeholders) → 1.0.0
+- Modified principles: N/A (initial ratification from template)
+- Added sections: Core Principles (5), Product Scope & Constraints, Quality Gates, Governance
+- Removed sections: Template example principles (Library-First, CLI Interface, etc.)
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md (Constitution Check gates)
+  - ✅ .specify/templates/tasks-template.md (tests mandatory per constitution)
+  - ✅ .specify/templates/spec-template.md (usability/accessibility guidance)
+  - ✅ .cursor/rules/specify-rules.mdc (project context pointer)
+  - ⚠ .specify/templates/checklist-template.md (no structural change needed)
+- Follow-up TODOs: None
+-->
+
+# Dept Tracker Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Universal Usability
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+The application MUST be understandable by users of all technical backgrounds.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Use plain-language labels, help text, and error messages; avoid jargon unless defined in context.
+- Primary flows (add a credit, record usage, view remaining balance) MUST be completable without reading external documentation.
+- Empty states, confirmations, and errors MUST tell the user what happened and what to do next.
+- New features MUST include acceptance scenarios written from a non-technical user perspective.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Home-server operators range from hobbyists to power users; clarity is a core product requirement, not polish.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Home-Server Fit
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+The system MUST remain simple to deploy and operate on a typical home server.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- Core credit tracking MUST work without mandatory third-party SaaS dependencies.
+- Data MUST persist locally (file or embedded database) with predictable backup/restore documented in `quickstart.md`.
+- Resource use MUST stay modest (single-instance deployment is acceptable for v1).
+- Configuration MUST favor sensible defaults over extensive tuning.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: The product targets self-hosted environments where operational burden must stay low.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Credit Tracking Integrity
+
+Multiple credits and decreasing balances are the non-negotiable domain model.
+
+- Users MUST be able to create and manage multiple independent credits (budgets/allowances).
+- Each credit MUST display a current remaining balance that decreases when usage is recorded.
+- Balance changes MUST be persisted atomically; restarts MUST NOT lose recorded usage.
+- Usage history or an audit trail MUST be available so users can verify how a balance changed.
+- Domain rules (e.g., cannot spend below zero unless explicitly specified) MUST be enforced in code and covered by tests.
+
+**Rationale**: Accurate, trustworthy tracking of credits over time is the product's reason to exist.
+
+### IV. Comprehensive Testing (NON-NEGOTIABLE)
+
+Every behavior that affects users or persisted data MUST have automated test coverage.
+
+- New behavior follows test-first discipline: write a failing test, implement, refactor (Red-Green-Refactor).
+- Unit tests cover domain logic (balances, validation, edge cases).
+- Integration tests cover persistence and API/UI flows end-to-end for each user story.
+- CI (or local equivalent documented in the plan) MUST fail on test regressions before merge.
+- Bug fixes MUST include a regression test unless technically infeasible (document why in the PR/plan).
+
+**Rationale**: Reliability on a home server matters; the project owner requires everything tested.
+
+### V. Clean Professional UI
+
+The interface MUST be simple, consistent, and professional—not flashy or cluttered.
+
+- Visual design uses a restrained palette, consistent spacing, and readable typography.
+- Layouts MUST work on common desktop and mobile browser widths used at home.
+- Primary flows MUST meet baseline accessibility: sufficient contrast, visible focus states, keyboard navigation for core actions.
+- Decorative complexity and non-essential animations are out of scope unless a feature spec justifies them.
+
+**Rationale**: Users asked for clean, professional presentation that still feels approachable.
+
+## Product Scope & Constraints
+
+- **In scope (v1 direction)**: Multi-credit tracking, recording usage, viewing remaining balances and history, self-hosted deployment.
+- **Out of scope unless a feature spec explicitly expands it**: Payment processing, multi-tenant billing, cloud sync, advanced analytics dashboards.
+- **Simplicity**: Prefer boring, proven technology choices documented in `plan.md`; reject scope creep during implementation.
+- **Dependencies**: New external services require justification in the plan's Complexity Tracking table.
+
+## Quality Gates
+
+- **Plan gate**: `plan.md` Constitution Check MUST pass before Phase 0 research and again after Phase 1 design.
+- **Spec gate**: Each user story MUST be independently testable with Given/When/Then acceptance scenarios.
+- **Task gate**: `tasks.md` MUST list test tasks before implementation tasks for each user story.
+- **Implementation gate**: No unresolved `NEEDS CLARIFICATION` markers when `/speckit-implement` starts.
+- **UX gate**: Primary flows receive a plain-language and accessibility spot-check before the feature is marked complete.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes ad-hoc implementation choices for the Dept Tracker project.
+- Amendments require updating this file, bumping `CONSTITUTION_VERSION` per semantic versioning, and refreshing affected templates.
+- **MAJOR**: Principle removal or backward-incompatible redefinition.
+- **MINOR**: New principle or materially expanded guidance.
+- **PATCH**: Clarifications and non-semantic wording fixes.
+- All feature plans, specs, and task lists MUST be reviewed for compliance before implementation.
+- Runtime guidance: feature specs under `specs/`, `.cursor/rules/specify-rules.mdc`, and per-feature `quickstart.md`.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-05-20 | **Last Amended**: 2026-05-20
