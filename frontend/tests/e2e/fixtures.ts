@@ -27,7 +27,7 @@ export async function loginUi(page: import('@playwright/test').Page) {
 export const test = base.extend({
   page: async ({ page, request }, use) => {
     await page.addInitScript(() => {
-      localStorage.setItem('dept-tracker-locale', 'en');
+      localStorage.setItem('debt-tracker-locale', 'en');
     });
     const cookie = await apiLoginCookie(request);
     const res = await request.post('/api/v1/import?confirm=true', {

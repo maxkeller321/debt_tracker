@@ -1,5 +1,5 @@
 services:
-  dept-tracker:
+  debt-tracker:
     build:
       context: ..
       dockerfile: docker/Dockerfile

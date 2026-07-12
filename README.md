@@ -17,13 +17,13 @@ prebuilt image.
 
 ```yaml
 services:
-  dept-tracker:
-    image: ghcr.io/maxkeller321/dept-tracker:latest
-    container_name: dept-tracker
+  debt-tracker:
+    image: ghcr.io/maxkeller321/debt-tracker:latest
+    container_name: debt-tracker
     ports:
       - "8080:8080"                  # host:container — change the host port if 8080 is taken
     volumes:
-      - ./dept-tracker-data:/data    # SQLite DB lives here — back this folder up
+      - ./debt-tracker-data:/data    # SQLite DB lives here — back this folder up
     environment:
       - RUST_LOG=info
       # Optional: bootstrap the first account on an EMPTY database.
@@ -36,15 +36,15 @@ services:
 > Then browse to **`http://<server-ip>:8080`** and click **Create account** to set your
 > username and password.
 
-**Already have a compose stack?** Just paste the `dept-tracker:` block under your existing
-`services:` and run `docker compose up -d dept-tracker`.
+**Already have a compose stack?** Just paste the `debt-tracker:` block under your existing
+`services:` and run `docker compose up -d debt-tracker`.
 
 <details>
 <summary><b>Prefer to build from source instead of pulling the image?</b></summary>
 
 ```bash
-git clone https://github.com/maxkeller321/dept_tracker.git
-cd dept_tracker
+git clone https://github.com/maxkeller321/debt_tracker.git
+cd debt_tracker
 docker compose -f docker/compose.yml up -d --build
 ```
 
@@ -61,12 +61,12 @@ are cached after the first successful cook step.
 - One local account per installation. Docker does **not** auto-create a default password.
 - To pre-seed credentials (skip manual registration on an empty DB), set `AUTH_USERNAME` /
   `AUTH_PASSWORD` in the compose `environment:` **before** the first run.
-- To start over / register again: stop the container, delete `./dept-tracker-data/dept_tracker.db`
+- To start over / register again: stop the container, delete `./debt-tracker-data/debt_tracker.db`
   (or the whole data folder), and start it again.
 
 ### Data & backups
 
-Your data lives in the `/data` volume (`dept_tracker.db`). For portable backups use
+Your data lives in the `/data` volume (`debt_tracker.db`). For portable backups use
 **Settings → Export JSON**; **Import** does a **full replace** of all data.
 
 > **🔒 Security:** Do not expose port 8080 directly to the internet. Put it behind a VPN

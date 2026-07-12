@@ -14,7 +14,18 @@ pub async fn init_pool_memory() -> Result<SqlitePool, sqlx::Error> {
 
 pub async fn init_pool(data_dir: &Path) -> Result<SqlitePool, sqlx::Error> {
     std::fs::create_dir_all(data_dir).ok();
-    let db_path = data_dir.join("dept_tracker.db");
+    let db_path = data_dir.join("debt_tracker.db");
+    // One-time migration: releases before the rename stored the DB as "dept_tracker.db"
+    // (typo). Rename the existing file (and its -wal/-shm sidecars) in place so upgrades
+    // keep their data instead of starting from an empty database.
+    if !db_path.exists() {
+        for suffix in ["", "-wal", "-shm"] {
+            let legacy = data_dir.join(format!("dept_tracker.db{suffix}"));
+            if legacy.exists() {
+                let _ = std::fs::rename(&legacy, data_dir.join(format!("debt_tracker.db{suffix}")));
+            }
+        }
+    }
     let options = SqliteConnectOptions::new()
         .filename(&db_path)
         .create_if_missing(true);

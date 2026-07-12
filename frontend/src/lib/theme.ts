@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export type Theme = 'light' | 'dark';
 
-const STORAGE_KEY = 'dept-tracker-theme';
+const STORAGE_KEY = 'debt-tracker-theme';
 
 function readStoredTheme(): Theme {
   if (typeof localStorage === 'undefined') return 'light';

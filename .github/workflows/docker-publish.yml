@@ -1,7 +1,7 @@
 name: Publish Docker image
 
 # Builds the container image and pushes it to GitHub Container Registry (GHCR).
-# Published as: ghcr.io/<owner>/dept-tracker
+# Published as: ghcr.io/<owner>/debt-tracker
 #   - :latest and :sha-<commit>  on every push to main
 #   - :X.Y.Z, :X.Y, :X            on version tags (e.g. v1.2.3)
 on:
@@ -13,7 +13,7 @@ on:
 env:
   REGISTRY: ghcr.io
   # Image name is decoupled from the repo name so the README path stays stable.
-  IMAGE_NAME: ${{ github.repository_owner }}/dept-tracker
+  IMAGE_NAME: ${{ github.repository_owner }}/debt-tracker
 
 jobs:
   build-and-push:

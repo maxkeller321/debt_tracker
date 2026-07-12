@@ -22,7 +22,7 @@ test('export and import JSON round-trip', async ({ page }) => {
   const dlPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export JSON backup' }).click();
   const dl = await dlPromise;
-  const tmp = path.join(os.tmpdir(), 'dept-tracker-e2e.json');
+  const tmp = path.join(os.tmpdir(), 'debt-tracker-e2e.json');
   await dl.saveAs(tmp);
   const json = JSON.parse(fs.readFileSync(tmp, 'utf-8'));
   expect(json.schema_version).toBe(1);

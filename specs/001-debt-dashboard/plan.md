@@ -13,7 +13,7 @@ Build a self-hosted **debt tracking web app** for home servers: a dashboard of a
 
 **Language/Version**: Rust 1.78+ (backend), TypeScript / Svelte 5 (frontend)  
 **Primary Dependencies**: Axum 0.7, sqlx 0.8 (SQLite), tower-http, serde; Vite, Svelte 5; Docker multi-stage build  
-**Storage**: SQLite file at `/data/dept_tracker.db` (volume-mounted)  
+**Storage**: SQLite file at `/data/debt_tracker.db` (volume-mounted)  
 **Testing**: `cargo test` (domain unit + API integration), contract tests vs `contracts/openapi.yaml`, Vitest (frontend unit), Playwright (E2E smoke)  
 **Target Platform**: Linux amd64 container (home server / Proxmox / Umbrel)  
 **Project Type**: Web application (backend + frontend)  

@@ -21,7 +21,7 @@
 
 ## 2. Persistence
 
-**Decision**: SQLite via `sqlx` with file at `/data/dept_tracker.db` (volume-mounted).
+**Decision**: SQLite via `sqlx` with file at `/data/debt_tracker.db` (volume-mounted).
 
 **Rationale**: User assumption; embedded DB fits single-household, no external DB ops, atomic writes, easy container volume backup alongside JSON export.
 

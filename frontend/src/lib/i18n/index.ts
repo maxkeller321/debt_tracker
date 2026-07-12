@@ -6,7 +6,7 @@ import fr from './locales/fr';
 
 export type Locale = 'en' | 'de' | 'es' | 'fr';
 
-const STORAGE_KEY = 'dept-tracker-locale';
+const STORAGE_KEY = 'debt-tracker-locale';
 
 const catalogs: Record<Locale, Record<string, string>> = { en, de, es, fr };
 

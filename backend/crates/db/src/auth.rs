@@ -4,7 +4,7 @@ use chrono::{Duration, Utc};
 use sqlx::SqlitePool;
 use uuid::Uuid;
 
-pub const SESSION_COOKIE: &str = "dept_tracker_session";
+pub const SESSION_COOKIE: &str = "debt_tracker_session";
 
 pub async fn bootstrap_auth(pool: &SqlitePool) -> Result<(), sqlx::Error> {
     let row: Option<(Option<String>,)> =

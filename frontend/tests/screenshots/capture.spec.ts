@@ -58,8 +58,8 @@ test('capture screenshots', async ({ page, request }) => {
 
   // ---- Deterministic UI: English + light theme ----
   await page.addInitScript(() => {
-    localStorage.setItem('dept-tracker-locale', 'en');
-    localStorage.setItem('dept-tracker-theme', 'light');
+    localStorage.setItem('debt-tracker-locale', 'en');
+    localStorage.setItem('debt-tracker-theme', 'light');
   });
 
   // ---- 01 · Login screen (page has no session cookie yet) ----

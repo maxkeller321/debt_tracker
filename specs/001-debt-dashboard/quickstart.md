@@ -12,13 +12,13 @@
 
 ```bash
 git clone <repository-url>
-cd dept_tracker
+cd debt_tracker
 docker compose -f docker/compose.yml up -d
 ```
 
 Open **http://localhost:8080** in a browser.
 
-Data persists in `./data/dept_tracker.db` (mounted volume). The SQLite file is internal; use **Export JSON** in the app for portable backups.
+Data persists in `./data/debt_tracker.db` (mounted volume). The SQLite file is internal; use **Export JSON** in the app for portable backups.
 
 ## First-use flow
 
