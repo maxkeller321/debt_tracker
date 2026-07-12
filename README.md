@@ -5,9 +5,8 @@ Track multiple loans, automatic regular payments, _Sonderzahlungen_ (extra payme
 interest, and payoff projections. Your financial data never leaves your machine.
 
 <p align="center">
-  <img src="docs/screenshots/02-dashboard.png" alt="Dashboard" width="285">
-  <img src="docs/screenshots/03-loan-detail.png" alt="Loan detail" width="285">
-  <img src="docs/screenshots/05-add-loan.png" alt="Add a loan" width="285">
+  <img src="docs/screenshots/02-dashboard.png" alt="Dashboard" width="430">
+  <img src="docs/screenshots/03-loan-detail.png" alt="Loan detail" width="430">
 </p>
 
 ## 🚀 Run it (Docker Compose)
@@ -86,9 +85,11 @@ More detail: [specs/001-debt-dashboard/quickstart.md](specs/001-debt-dashboard/q
 
 ## Screenshots
 
-| Amortization schedule | Sign in | Backup & restore |
-| :--: | :--: | :--: |
-| ![Amortization schedule](docs/screenshots/04-loan-amortization.png) | ![Sign in](docs/screenshots/01-login.png) | ![Backup & restore](docs/screenshots/06-settings.png) |
+| Add a loan | Amortization schedule |
+| :--: | :--: |
+| ![Add a loan](docs/screenshots/05-add-loan.png) | ![Amortization schedule](docs/screenshots/04-loan-amortization.png) |
+| **Sign in** | **Backup & restore** |
+| ![Sign in](docs/screenshots/01-login.png) | ![Backup & restore](docs/screenshots/06-settings.png) |
 
 More views in [`docs/screenshots/`](docs/screenshots/).
 
