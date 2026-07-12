@@ -1,5 +1,5 @@
 export default {
-  'app.title': 'Dept Tracker',
+  'app.title': 'Debt Tracker',
   'app.tagline': 'Kredite, Zahlungen und Tilgungstermine auf Ihrem Home-Server verfolgen.',
   'lang.en': 'Englisch',
   'lang.de': 'Deutsch',

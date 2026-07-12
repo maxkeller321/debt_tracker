@@ -1,4 +1,4 @@
-# Quickstart: Dept Tracker (Debt Dashboard)
+# Quickstart: Debt Tracker (Debt Dashboard)
 
 **Feature**: `001-debt-dashboard` | **Date**: 2026-05-20
 

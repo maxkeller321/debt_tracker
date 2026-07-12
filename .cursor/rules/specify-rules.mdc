@@ -3,7 +3,7 @@ alwaysApply: true
 ---
 
 <!-- SPECKIT START -->
-Project: **Dept Tracker** — self-hosted debt/loan tracker for home servers.
+Project: **Debt Tracker** — self-hosted debt/loan tracker for home servers.
 
 **Active feature**: `specs/001-debt-dashboard`  
 **Plan**: `specs/001-debt-dashboard/plan.md`  

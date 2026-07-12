@@ -1,4 +1,4 @@
-# Dept Tracker
+# Debt Tracker
 
 Self-hosted debt dashboard for home servers (Proxmox, Umbrel, Unraid, Synology, …).
 Track multiple loans, automatic regular payments, _Sonderzahlungen_ (extra payments),
@@ -11,7 +11,7 @@ interest, and payoff projections. Your financial data never leaves your machine.
 
 ## 🚀 Run it (Docker Compose)
 
-The easiest way to add Dept Tracker to your home server — drop this service into your
+The easiest way to add Debt Tracker to your home server — drop this service into your
 `docker-compose.yml` and run `docker compose up -d`. No build required; it pulls a
 prebuilt image.
 

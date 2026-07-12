@@ -3,7 +3,7 @@ import { fillNumber } from './helpers';
 
 test('dashboard empty state and add loan', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Dept Tracker' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Debt Tracker' })).toBeVisible();
   await expect(page.getByText('No loans yet')).toBeVisible();
   await page.getByRole('button', { name: 'Add your first loan' }).click();
   await page.getByLabel('Name').fill('E2E Mortgage');

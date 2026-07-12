@@ -20,7 +20,7 @@
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `dept-tracker-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `debt-tracker-backup-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       success = tr('settings.backupDownloaded');
     } catch (e) {

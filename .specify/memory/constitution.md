@@ -13,7 +13,7 @@ Sync Impact Report
 - Follow-up TODOs: None
 -->
 
-# Dept Tracker Constitution
+# Debt Tracker Constitution
 
 ## Core Principles
 
@@ -91,7 +91,7 @@ The interface MUST be simple, consistent, and professional—not flashy or clutt
 
 ## Governance
 
-- This constitution supersedes ad-hoc implementation choices for the Dept Tracker project.
+- This constitution supersedes ad-hoc implementation choices for the Debt Tracker project.
 - Amendments require updating this file, bumping `CONSTITUTION_VERSION` per semantic versioning, and refreshing affected templates.
 - **MAJOR**: Principle removal or backward-incompatible redefinition.
 - **MINOR**: New principle or materially expanded guidance.

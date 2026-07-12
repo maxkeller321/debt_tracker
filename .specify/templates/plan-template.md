@@ -31,7 +31,7 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-Verify compliance with `.specify/memory/constitution.md` (Dept Tracker v1.0.0):
+Verify compliance with `.specify/memory/constitution.md` (Debt Tracker v1.0.0):
 
 | Principle | Gate (must be true to proceed) |
 |-----------|--------------------------------|

@@ -1,5 +1,5 @@
 export default {
-  'app.title': 'Dept Tracker',
+  'app.title': 'Debt Tracker',
   'app.tagline': 'Suivez prêts, paiements et dates de remboursement sur votre serveur domestique.',
   'lang.en': 'Anglais',
   'lang.de': 'Allemand',
