@@ -4,6 +4,10 @@ Self-hosted debt dashboard for home servers (Proxmox, Umbrel, Unraid, Synology, 
 Track multiple loans, automatic regular payments, _Sonderzahlungen_ (extra payments),
 interest, and payoff projections. Your financial data never leaves your machine.
 
+<p align="center">
+  <img src="docs/screenshots/02-dashboard.png" alt="Dept Tracker dashboard" width="880">
+</p>
+
 ## 🚀 Run it (Docker Compose)
 
 The easiest way to add Dept Tracker to your home server — drop this service into your
@@ -78,6 +82,16 @@ Your data lives in the `/data` volume (`dept_tracker.db`). For portable backups 
 
 More detail: [specs/001-debt-dashboard/quickstart.md](specs/001-debt-dashboard/quickstart.md)
 
+## Screenshots
+
+| Loan detail & extra payments | Add a loan |
+| :--: | :--: |
+| ![Loan detail](docs/screenshots/03-loan-detail.png) | ![Add loan](docs/screenshots/05-add-loan.png) |
+| **Amortization schedule** | **Sign in** |
+| ![Amortization schedule](docs/screenshots/04-loan-amortization.png) | ![Sign in](docs/screenshots/01-login.png) |
+
+More views in [`docs/screenshots/`](docs/screenshots/).
+
 ## Development
 
 ```bash
@@ -91,6 +105,13 @@ cd frontend && npm install && npm run dev
 # Tests
 cd backend && cargo test
 cd frontend && npm test && npm run test:e2e
+```
+
+**Regenerate the screenshots** (after a UI change) — one command, seeds example data,
+boots the app, and rewrites `docs/screenshots/`:
+
+```bash
+cd frontend && npm run screenshots   # requires cargo (builds & runs the backend)
 ```
 
 ## Stack
