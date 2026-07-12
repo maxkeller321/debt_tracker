@@ -13,6 +13,7 @@ export default defineConfig({
       'cd ../backend && DATA_DIR=../data-e2e STATIC_DIR=../frontend/build AUTH_USERNAME=e2e AUTH_PASSWORD=e2e cargo run -p api',
     url: 'http://127.0.0.1:8080/api/v1/health',
     reuseExistingServer: !!process.env.CI,
-    timeout: 120_000,
+    // Cold `cargo run` in CI compiles the backend from scratch; give it room.
+    timeout: 300_000,
   },
 });

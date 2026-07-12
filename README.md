@@ -99,5 +99,4 @@ Rust (Axum, sqlx, SQLite) · Svelte 5 + Vite · Docker
 
 ## License
 
-Not set yet — pick one before publishing (MIT/Apache-2.0 are common for self-hosted apps)
-and add a `LICENSE` file.
+[MIT](LICENSE) © 2026 Max Keller

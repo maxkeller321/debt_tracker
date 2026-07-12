@@ -149,7 +149,7 @@ fn hash_password(password: &str) -> Result<String, sqlx::Error> {
     let argon2 = Argon2::default();
     let hash = argon2
         .hash_password(password.as_bytes(), &salt)
-        .map_err(|e| sqlx::Error::Protocol(e.to_string().into()))?;
+        .map_err(|e| sqlx::Error::Protocol(e.to_string()))?;
     Ok(hash.to_string())
 }
 

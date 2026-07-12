@@ -34,7 +34,7 @@ pub async fn register(
 ) -> Result<Response, ApiError> {
     let token = db::auth::register(&state.pool, &body.username, &body.password)
         .await
-        .map_err(|msg| ApiError::bad_request(msg))?;
+        .map_err(ApiError::bad_request)?;
     Ok((
         StatusCode::OK,
         [(header::SET_COOKIE, session_cookie(&token))],
