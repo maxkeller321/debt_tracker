@@ -16,7 +16,7 @@ test('export and import JSON round-trip', async ({ page }) => {
   );
   await page.getByRole('button', { name: 'Save loan' }).click();
   expect((await create).ok()).toBeTruthy();
-  await expect(page.getByRole('button', { name: /Backup Test/ })).toHaveCount(1);
+  await expect(page.locator('article').filter({ hasText: 'Backup Test' })).toHaveCount(1);
 
   await page.getByRole('button', { name: 'Settings' }).click();
   const dlPromise = page.waitForEvent('download');
@@ -31,5 +31,5 @@ test('export and import JSON round-trip', async ({ page }) => {
   page.on('dialog', (d) => d.accept());
   await page.locator('input[type="file"]').setInputFiles(tmp);
   await expect(page.getByText('Import complete')).toBeVisible({ timeout: 10_000 });
-  await expect(page.getByRole('button', { name: /Backup Test/ })).toHaveCount(1);
+  await expect(page.locator('article').filter({ hasText: 'Backup Test' })).toHaveCount(1);
 });

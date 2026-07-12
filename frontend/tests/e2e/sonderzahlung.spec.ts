@@ -29,7 +29,7 @@ test('record extra payment on expanded loan', async ({ page }) => {
     paid_at?: string;
   };
   expect(body.recalculate_from_past).toBeFalsy();
-  await expect(page.getByRole('button', { name: /Extra Pay Test/ })).toBeVisible();
+  await expect(card).toBeVisible();
 });
 
 test('schedule future extra payment from plan row', async ({ page }) => {
@@ -56,7 +56,7 @@ test('schedule future extra payment from plan row', async ({ page }) => {
   const scheduled = page.waitForResponse(
     (r) => r.url().includes('/sonderzahlungen/scheduled') && r.request().method() === 'POST',
   );
-  await card.getByRole('button', { name: 'Schedule' }).click();
+  await card.getByRole('button', { name: 'Schedule', exact: true }).click();
   const scheduledResp = await scheduled;
   expect(scheduledResp.ok()).toBeTruthy();
   await expect(card.getByText('Upcoming extra payments')).toBeVisible();

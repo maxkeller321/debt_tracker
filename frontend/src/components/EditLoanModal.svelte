@@ -32,8 +32,9 @@
       initialTilgungPercent != null ? String(initialTilgungPercent / 100) : '';
   }
 
-  function fieldValue(id: string, fallback: string) {
-    const bound = fallback.trim();
+  function fieldValue(id: string, fallback: unknown) {
+    // `type="number"` bindings arrive as numbers (or null), so coerce before trimming.
+    const bound = String(fallback ?? '').trim();
     const el = document.getElementById(id) as HTMLInputElement | null;
     const dom = (el?.value ?? '').trim();
     return bound || dom;

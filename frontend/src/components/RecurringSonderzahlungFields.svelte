@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '../lib/i18n';
 
-  export type RecurringEntry = { amount: string; month: string; day: string };
+  type RecurringEntry = { amount: string; month: string; day: string };
 
   export let enabled = false;
   export let entries: RecurringEntry[] = [{ amount: '', month: '12', day: '1' }];

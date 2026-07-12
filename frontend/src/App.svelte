@@ -160,7 +160,7 @@
     </div>
 
     <main class="page" id="main-content">
-      {#if loading}
+      {#if loading && !dashboard}
         <div class="page-loading" role="status">
           <span class="spinner" aria-hidden="true"></span>
           {tr('common.loading')}

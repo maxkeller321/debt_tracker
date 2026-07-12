@@ -13,5 +13,5 @@ test('add loan from header button', async ({ page }) => {
   );
   await page.getByRole('button', { name: 'Save loan' }).click();
   expect((await create).ok()).toBeTruthy();
-  await expect(page.getByRole('button', { name: /Car Loan/ })).toBeVisible();
+  await expect(page.locator('article').filter({ hasText: 'Car Loan' })).toBeVisible();
 });

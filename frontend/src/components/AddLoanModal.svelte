@@ -31,10 +31,11 @@
   }
 
   /** Prefer live DOM value; fall back to bind state. */
-  function fieldValue(id: string, fallback: string) {
+  function fieldValue(id: string, fallback: unknown) {
     const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
     const dom = (el?.value ?? '').trim();
-    const bound = fallback.trim();
+    // `type="number"` bindings arrive as numbers (or null), so coerce before trimming.
+    const bound = String(fallback ?? '').trim();
     return dom || bound;
   }
 

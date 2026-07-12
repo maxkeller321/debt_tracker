@@ -15,6 +15,6 @@ test('dashboard empty state and add loan', async ({ page }) => {
   );
   await page.getByRole('button', { name: 'Save loan' }).click();
   expect((await create).ok()).toBeTruthy();
-  await expect(page.getByRole('button', { name: /E2E Mortgage/ })).toBeVisible();
+  await expect(page.locator('article').filter({ hasText: 'E2E Mortgage' })).toBeVisible();
   await expect(page.getByText('Total remaining')).toBeVisible();
 });
